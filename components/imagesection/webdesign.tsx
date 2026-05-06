@@ -117,7 +117,7 @@ export default function BrandinSection() {
           ref={sectionRef}
           style={{
             position: "relative",
-            background: "#E84000",
+            background: "#006699",
             minHeight: "580px",
             overflow: "hidden",
             display: "flex",

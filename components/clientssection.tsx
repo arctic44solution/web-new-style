@@ -75,6 +75,7 @@ export default function ClientsSection() {
 
   return (
     <section
+      id="clients"
       style={{
         background: "#000000",
         minHeight: "100vh",

@@ -80,7 +80,7 @@ export default function Design() {
           padding-top: 20px;
         }
 
-        .headline {
+        .d5-headline {
           font-family: 'Bebas Neue', 'Arial Black', sans-serif;
           font-weight: 900;
           font-size: clamp(32px, 4.5vw, 64px);
@@ -88,9 +88,10 @@ export default function Design() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           margin-bottom: 28px;
+          color: #ffffff;
         }
 
-        .description {
+        .d5-description {
           font-size: clamp(14px, 1.1vw, 17px);
           line-height: 1.6;
           color: rgba(255, 255, 255, 0.7);
@@ -112,6 +113,8 @@ export default function Design() {
           border-top: 1px solid rgba(255, 255, 255, 0.15);
           cursor: pointer;
           transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
         }
 
         .service-item:last-child {
@@ -124,16 +127,46 @@ export default function Design() {
           padding-left: 15px;
         }
 
-        .service-title {
+        .cursor-glow {
+          position: absolute;
+          width: 350px;
+          height: 350px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.13) 0%,
+            rgba(255, 255, 255, 0.05) 40%,
+            transparent 70%
+          );
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 1;
+        }
+
+        .service-item:hover .cursor-glow {
+          opacity: 1;
+        }
+
+        .d5-service-title {
           font-size: clamp(16px, 1.2vw, 20px);
           text-transform: uppercase;
           letter-spacing: 0.05em;
+          color: #ffffff;
+          position: relative;
+          z-index: 2;
+          pointer-events: none;
         }
 
-        .service-number {
+        .d5-service-number {
           font-family: 'Barlow Condensed', sans-serif;
           font-weight: 700;
           opacity: 0.5;
+          color: #ffffff;
+          position: relative;
+          z-index: 2;
+          pointer-events: none;
         }
 
         /* Grain Texture Overlay */
@@ -171,13 +204,13 @@ export default function Design() {
 
         {/* Right Side: Long content that creates the scroll */}
         <div className="right-content">
-          <h1 className="headline">
+          <h1 className="d5-headline">
             Designing Performance-Driven<br />
             Creative That Turns Attention Into
             Action
           </h1>
 
-          <p className="description">
+          <p className="d5-description">
             I design performance-driven digital creative that turns attention into action—crafting social content, paid ads, and campaign
             systems optimized for conversion, clarity, and consistency, guided by audience insight, creative testing, and measurable
             results.
@@ -190,9 +223,18 @@ export default function Design() {
                 className="service-item"
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const glow = e.currentTarget.querySelector('.cursor-glow') as HTMLElement;
+                  if (glow) {
+                    glow.style.left = (e.clientX - rect.left) + 'px';
+                    glow.style.top = (e.clientY - rect.top) + 'px';
+                  }
+                }}
               >
-                <span className="service-title">{service.title}</span>
-                <span className="service-number">{service.id}</span>
+                <div className="cursor-glow" />
+                <span className="d5-service-title">{service.title}</span>
+                <span className="d5-service-number">{service.id}</span>
               </li>
             ))}
           </ul>

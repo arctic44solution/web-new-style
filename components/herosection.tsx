@@ -18,7 +18,7 @@ export default function HeroSection() {
           width: 100%;
           height: 100vh;
           min-height: 600px;
-          background-color: #E84A00;
+          background-color: #006699;
           overflow: hidden;
           font-family: 'Barlow Condensed', sans-serif;
         }
@@ -30,7 +30,7 @@ export default function HeroSection() {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          background: #E84A00; 
+          background: #006699;
           z-index: 0;
           opacity: 0.30;
         }

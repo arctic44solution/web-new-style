@@ -274,7 +274,7 @@ export default function ArmadaCaseStudy() {
         /* MORE WORK SECTION */
         .more-work-section {
           padding: 80px 40px;
-          background: var(--orange);
+          background: #006699;
           position: relative;
         }
 

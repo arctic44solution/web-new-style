@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const awards = [
   {
@@ -25,6 +25,7 @@ const awards = [
 
 export default function AwardsSection() {
   const rowsRef = useRef<HTMLDivElement[]>([]);
+  const [, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,7 +48,7 @@ export default function AwardsSection() {
   }, []);
 
   return (
-    <section className="awards-section">
+    <section id="awards" className="awards-section">
       <div className="awards-container">
         {/* Label Area */}
         <div className="awards-label">
@@ -77,7 +78,18 @@ export default function AwardsSection() {
                 transform: "translateY(20px)",
                 transition: `opacity 0.6s ease ${i * 0.12}s, transform 0.6s ease ${i * 0.12}s`,
               }}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const glow = e.currentTarget.querySelector('.cursor-glow') as HTMLElement;
+                if (glow) {
+                  glow.style.left = (e.clientX - rect.left) + 'px';
+                  glow.style.top = (e.clientY - rect.top) + 'px';
+                }
+              }}
             >
+              <div className="cursor-glow" />
               <span className="col-company">{award.company}</span>
               <span className="col-source">{award.source}</span>
               <span className="col-title">{award.title}</span>
@@ -136,6 +148,7 @@ export default function AwardsSection() {
           line-height: 1.1;
           text-transform: uppercase;
           margin: 0;
+          padding-left: 155px;
         }
 
         .awards-table {
@@ -150,11 +163,39 @@ export default function AwardsSection() {
           border-bottom: 1px solid #333;
           align-items: center;
           gap: 20px;
+          position: relative;
+          overflow: hidden;
+          cursor: pointer;
+        }
+
+        .cursor-glow {
+          position: absolute;
+          width: 1500px;
+          height: 1000px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.10) 0%,
+            rgba(255, 255, 255, 0.04) 40%,
+            transparent 70%
+          );
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 1;
+        }
+
+        .awards-row:hover .cursor-glow {
+          opacity: 1;
         }
 
         .col-company, .col-source, .col-title, .col-year {
           font-size: 15px;
           color: #e0e0e0;
+          position: relative;
+          z-index: 2;
+          pointer-events: none;
         }
 
         .col-year {

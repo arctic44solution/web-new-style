@@ -59,6 +59,7 @@ export default function ExperienceSection() {
 
   return (
     <section
+      id="experience"
       style={{
         backgroundColor: "#ffffff",
         minHeight: "100vh",

@@ -55,7 +55,7 @@ export default function StatsSection() {
   return (
     <section 
       ref={containerRef} 
-      className="bg-[#E84000] min-h-screen pt-10 pb-20 overflow-hidden flex flex-col justify-center font-sans"
+      className="bg-[#006699] min-h-screen pt-10 pb-20 overflow-hidden flex flex-col justify-center font-sans"
     >
       <div className="w-full px-8">
         {stats.map((item, index) => (

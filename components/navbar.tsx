@@ -1,24 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setVisible(currentY < lastScrollY.current || currentY < 80);
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       <style>{`
         .navbar {
-          position: absolute;
+          position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 10;
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 28px 40px;
+          transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .navbar.hidden {
+          transform: translateY(-100%);
           opacity: 0;
-          transform: translateY(-12px);
-          animation: fadeSlideDown 0.7s ease forwards 0.1s;
+          pointer-events: none;
         }
 
         .logo { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
@@ -91,7 +106,7 @@ export default function Navbar() {
           width: 56px;
           height: 56px;
           border-radius: 50%;
-          background: #ff4500;
+          background: #006699;
           border: none;
           cursor: pointer;
           display: flex;
@@ -105,7 +120,7 @@ export default function Navbar() {
           opacity: 1;
           visibility: visible;
         }
-        .close-btn:hover { background: #e03d00; transform: translateY(-50%) scale(1.08); }
+        .close-btn:hover { background: #006699; transform: translateY(-50%) scale(1.08); }
         .close-btn svg { width: 20px; height: 20px; }
 
         /* Nav links */
@@ -158,7 +173,6 @@ export default function Navbar() {
         }
         .menu-overlay.open { pointer-events: all; }
 
-        @keyframes fadeSlideDown { to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 768px) {
           .navbar { padding: 20px 20px; }
@@ -183,18 +197,18 @@ export default function Navbar() {
         </button>
 
         <nav>
-          <a href="#work"       onClick={() => setMenuOpen(false)}>Work</a>
-          <a href="#expertise"  onClick={() => setMenuOpen(false)}>Expertise</a>
-          <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
-          <a href="#clients"    onClick={() => setMenuOpen(false)}>Clients</a>
-          <a href="#awards"     onClick={() => setMenuOpen(false)}>Awards</a>
-          <a href="#about"      onClick={() => setMenuOpen(false)}>About</a>
-          <a href="#connect"    onClick={() => setMenuOpen(false)}>Connect</a>
+          <a href="#work"     onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('featured-work')?.scrollIntoView({ behavior: 'smooth' }); }}>Work</a>
+          <a href="#expertise"  onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' }); }}>Expertise</a>
+          <a href="#experience" onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }); }}>Experience</a>
+          <a href="#clients"    onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('clients')?.scrollIntoView({ behavior: 'smooth' }); }}>Clients</a>
+          <a href="#awards"     onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('awards')?.scrollIntoView({ behavior: 'smooth' }); }}>Awards</a>
+          <a href="#about"      onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About</a>
+          <a href="#connect"    onClick={(e) => { e.preventDefault(); setMenuOpen(false); document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' }); }}>Connect</a>
         </nav>
       </div>
 
       {/* Navbar */}
-      <nav className="navbar">
+      <nav className={`navbar${!visible ? " hidden" : ""}`}>
         <div className="logo">
           <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 10h28M8 18h20M8 26h24M8 34h16" stroke="#0a0a0a" strokeWidth="3.5" strokeLinecap="round"/>

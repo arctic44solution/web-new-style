@@ -35,11 +35,7 @@ export default function Design() {
           min-height: 100vh;
         }
 
-        /* Main Container 
-           CRITICAL: align-items must be 'flex-start' for sticky to work. 
-           If it's 'stretch' (default), the big-number height will match the right-content, 
-           and there will be no room for it to "slide" down.
-        */
+        /* Main Container */
         .page-wrapper {
           display: flex;
           align-items: flex-start; 
@@ -48,10 +44,7 @@ export default function Design() {
           gap: 40px;
         }
 
-        /* The Sticky Big Number 
-           It stays fixed in the viewport once it reaches 'top: 100px' 
-           until the parent container (.page-wrapper) ends.
-        */
+        /* The Sticky Big Number */
         .big-number {
           font-family: 'Bebas Neue', 'Arial Black', sans-serif;
           font-weight: 900;
@@ -61,10 +54,9 @@ export default function Design() {
           letter-spacing: 0.03em;
           user-select: none;
           
-          /* Sticky Logic */
-          position: -webkit-sticky; /* Support for Safari */
+          position: -webkit-sticky;
           position: sticky;
-          top: 100px; /* Offset from the top of the screen */
+          top: 100px;
           
           flex-shrink: 0;
           width: clamp(250px, 35vw, 450px);
@@ -77,7 +69,7 @@ export default function Design() {
           padding-top: 20px;
         }
 
-        .headline {
+        .d1-headline {
           font-family: 'Bebas Neue', 'Arial Black', sans-serif;
           font-weight: 900;
           font-size: clamp(32px, 4.5vw, 64px);
@@ -85,9 +77,10 @@ export default function Design() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           margin-bottom: 28px;
+          color: #ffffff;
         }
 
-        .description {
+        .d1-description {
           font-size: clamp(14px, 1.1vw, 17px);
           line-height: 1.6;
           color: rgba(255, 255, 255, 0.7);
@@ -109,28 +102,63 @@ export default function Design() {
           border-top: 1px solid rgba(255, 255, 255, 0.15);
           cursor: pointer;
           transition: all 0.3s ease;
+
+          /* Required for cursor glow */
+          position: relative;
+          overflow: hidden;
         }
 
         .service-item:last-child {
           border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Interaction: Add slight background and padding shift on hover */
         .service-item:hover {
           background-color: rgba(255, 255, 255, 0.05);
           padding-left: 15px;
         }
 
-        .service-title {
+        /* Cursor Glow Element */
+        .cursor-glow {
+          position: absolute;
+          width: 350px;
+          height: 350px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.13) 0%,
+            rgba(255, 255, 255, 0.05) 40%,
+            transparent 70%
+          );
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 1;
+        }
+
+        .service-item:hover .cursor-glow {
+          opacity: 1;
+        }
+
+        /* Keep text above the glow */
+        .d1-service-title {
           font-size: clamp(16px, 1.2vw, 20px);
           text-transform: uppercase;
           letter-spacing: 0.05em;
+          color: #ffffff;
+          position: relative;
+          z-index: 2;
+          pointer-events: none;
         }
 
-        .service-number {
+        .d1-service-number {
           font-family: 'Barlow Condensed', sans-serif;
           font-weight: 700;
           opacity: 0.5;
+          color: #ffffff;
+          position: relative;
+          z-index: 2;
+          pointer-events: none;
         }
 
         /* Grain Texture Overlay */
@@ -150,7 +178,7 @@ export default function Design() {
             padding: 40px 20px;
           }
           .big-number {
-            position: relative; /* Disable sticky on mobile for better flow */
+            position: relative;
             top: 0;
             font-size: 120px;
             width: 100%;
@@ -168,12 +196,12 @@ export default function Design() {
 
         {/* Right Side: Long content that creates the scroll */}
         <div className="right-content">
-          <h1 className="headline">
+          <h1 className="d1-headline">
             Designing the Future with<br />
             Intelligent Creative Systems
           </h1>
 
-          <p className="description">
+          <p className="d1-description">
             I use AI as a creative amplifier—building custom tools, producing on-brand imagery, training custom LoRAs, and designing 
             automated workflows that accelerate output. Across image, video, audio, copy, and code, AI removes the friction once 
             inherent in ideation and iteration, enabling faster exploration, broader experimentation, and more fully realized creative ideas.
@@ -186,14 +214,23 @@ export default function Design() {
                 className="service-item"
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const glow = e.currentTarget.querySelector('.cursor-glow') as HTMLElement;
+                  if (glow) {
+                    glow.style.left = (e.clientX - rect.left) + 'px';
+                    glow.style.top = (e.clientY - rect.top) + 'px';
+                  }
+                }}
               >
-                <span className="service-title">{service.title}</span>
-                <span className="service-number">{service.id}</span>
+                {/* Cursor glow follows the mouse */}
+                <div className="cursor-glow" />
+                <span className="d1-service-title">{service.title}</span>
+                <span className="d1-service-number">{service.id}</span>
               </li>
             ))}
           </ul>
           
-          {/* Spacer to allow for more scrolling and test the sticky effect */}
           <div style={{ height: '0vh' }}></div>
         </div>
       </div>

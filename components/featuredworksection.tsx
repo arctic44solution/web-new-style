@@ -216,13 +216,13 @@ export default function FeaturedWorkSection() {
           position: absolute;
           left: 0; top: 0; bottom: 0;
           width: 0;
-          background: #E84A00;
+          background: #006699;
           transition: width 0.5s cubic-bezier(0.76, 0, 0.24, 1);
           z-index: 0;
         }
 
         .fw-item:hover::before { width: 100%; }
-        .fw-item:hover { padding-left: 20px; border-bottom-color: #E84A00; }
+        .fw-item:hover { padding-left: 20px; border-bottom-color: #006699; }
 
         .fw-item-left {
           display: flex;
@@ -242,7 +242,7 @@ export default function FeaturedWorkSection() {
           transition: color 0.25s;
         }
 
-        .fw-item:hover .fw-num { color: rgba(0,0,0,0.45); }
+        .fw-item:hover .fw-num { color: rgb(0, 0, 0); }
 
         .fw-name {
           font-family: 'Bebas Neue', sans-serif;
@@ -315,7 +315,7 @@ export default function FeaturedWorkSection() {
         }
       `}</style>
 
-      <section className="fw-section" ref={containerRef} onMouseMove={handleMouseMove}>
+      <section id="featured-work" className="fw-section" ref={containerRef} onMouseMove={handleMouseMove}>
         
         {/* Floating Image Component */}
         <div 

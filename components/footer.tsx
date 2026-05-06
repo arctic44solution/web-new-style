@@ -62,9 +62,9 @@ export default function Home() {
   }, [])
 
   return (
-    <main style={{
+    <main id="connect" style={{
       minHeight: '100vh',
-      background: '#E84000',
+      background: '#006699',
       color: '#0A0A0A',
       display: 'flex',
       flexDirection: 'column',

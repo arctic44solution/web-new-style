@@ -81,6 +81,7 @@ export default function ExpertiseSection() {
       `}</style>
       
       <section
+        id="expertise"
         style={{
           fontFamily: "'Bebas Neue', sans-serif",
           background: "#000",
@@ -109,7 +110,7 @@ export default function ExpertiseSection() {
           ref={sectionRef}
           style={{
             position: "relative",
-            background: "#E84000",
+            background: "#006699",
             minHeight: "580px",
             overflow: "hidden",
             display: "flex",
