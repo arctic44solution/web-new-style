@@ -64,6 +64,7 @@ export default function ExperienceSection() {
         backgroundColor: "#ffffff",
         minHeight: "100vh",
         padding: "80px 64px",
+        overflowX: "hidden",
         fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}
     >

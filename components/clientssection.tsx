@@ -83,7 +83,7 @@ export default function ClientsSection() {
         alignItems: "center",
         fontFamily: "'Arial Black', 'Helvetica Neue', sans-serif",
         padding: "80px 60px",
-        boxSizing: "border-box",
+        overflowX: "hidden",
       }}
     >
       <style>{`
